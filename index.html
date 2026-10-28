@@ -276,4 +276,29 @@ window.addEventListener('resize',tdResize);window.addEventListener('orientationc
  }
 })();
 </script>
+<script>
+/* Final safety layer: ensure mission start always switches to the arena and reports 3D errors visibly. */
+(function(){
+ const home=document.getElementById('home'), screens=[...document.querySelectorAll('.screen')], back=document.getElementById('back');
+ const play=document.getElementById('play-screen'), game=document.getElementById('game-screen');
+ function showArena(){
+   home.style.display='none';
+   screens.forEach(s=>s.classList.toggle('active',s===game));
+   back.hidden=false;
+   const note=document.getElementById('game-notice');
+   try{
+     if(typeof window.tdStartGame==='function') window.tdStartGame();
+     else {
+       // The arena remains accessible even if the original startup callback failed.
+       window.dispatchEvent(new Event('resize'));
+       if(note)note.textContent='Arena aberta. Se o campo 3D não aparecer, recarregue a página para reiniciar o motor gráfico.';
+     }
+   }catch(err){console.error(err);if(note)note.textContent='Falha ao iniciar o motor 3D. Recarregue a página; o menu continua disponível.';}
+ }
+ const start=document.getElementById('start-game');
+ if(start)start.addEventListener('click',()=>setTimeout(showArena,0));
+ // Rebind navigation independently from gameplay initialization.
+ document.querySelectorAll('.menu-btn[data-screen="play"]').forEach(b=>b.addEventListener('click',()=>{home.style.display='none';screens.forEach(s=>s.classList.toggle('active',s===play));back.hidden=false;}));
+})();
+</script>
 </body></html>
