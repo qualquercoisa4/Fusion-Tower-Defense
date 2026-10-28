@@ -105,7 +105,7 @@ document.querySelectorAll('[data-home]').forEach(b=>b.addEventListener('click',(
 back.addEventListener('click',()=>show('home'));
 const mapNames={lab:'Laboratório',outpost:'Posto avançado',reactor:'Reator'};let chosenMap='lab';
 document.querySelectorAll('[data-map]').forEach(b=>b.addEventListener('click',()=>{chosenMap=b.dataset.map;document.querySelectorAll('[data-map]').forEach(x=>x.classList.toggle('selected',x===b));$('#map-name').textContent=mapNames[chosenMap]}));
-$('#start-game').addEventListener('click',()=>{resetGame();show('game')});
+$('#start-game').addEventListener('click',()=>{tdResetGame();show('game')});
 document.querySelectorAll('[data-screen="play"]').forEach(b=>b.addEventListener('click',()=>show('play')));
 $('#exit-game').addEventListener('click',()=>{if(gameTimer)clearInterval(gameTimer);show('home')});
 
@@ -252,7 +252,7 @@ const oldShow=show;
 show=function(name){oldShow(name);if(name==='game'){if(!tdReady||!tdRenderer||!tdScene)tdStart();else{tdResetGame();tdResize();tdLast=performance.now();if(tdFrame)cancelAnimationFrame(tdFrame);tdFrame=requestAnimationFrame(tdTick)}}else if(tdFrame){cancelAnimationFrame(tdFrame);tdFrame=0}};
 $('#exit-game').addEventListener('click',()=>{if(tdFrame)cancelAnimationFrame(tdFrame);show('home')});
 window.addEventListener('resize',tdResize);window.addEventListener('orientationchange',()=>setTimeout(tdResize,120));
-window.tdStartGame=tdStart;window.tdIsReady=()=>!!(tdReady&&tdRenderer&&tdScene);
+window.tdStartGame=tdStart;window.tdIsReady=()=>!!(tdReady&&tdRenderer&&tdScene);window.tdNavigate=(name)=>show(name);
 
 })();
 </script>
@@ -307,28 +307,14 @@ window.tdStartGame=tdStart;window.tdIsReady=()=>!!(tdReady&&tdRenderer&&tdScene)
 })();
 </script>
 <script>
-/* Final safety layer: ensure mission start always switches to the arena and reports 3D errors visibly. */
+/* Navigation safety: route through the real game state so the animation loop knows the active screen. */
 (function(){
- const home=document.getElementById('home'), screens=[...document.querySelectorAll('.screen')], back=document.getElementById('back');
- const play=document.getElementById('play-screen'), game=document.getElementById('game-screen');
- function showArena(){
-   home.style.display='none';
-   screens.forEach(s=>s.classList.toggle('active',s===game));
-   back.hidden=true;
-   const note=document.getElementById('game-notice');
-   try{
-     if(typeof window.tdStartGame==='function' && !(typeof window.tdIsReady==='function' && window.tdIsReady())) window.tdStartGame();
-     else {
-       // The arena remains accessible even if the original startup callback failed.
-       window.dispatchEvent(new Event('resize'));
-       if(note)note.textContent='Arena aberta. Se o campo 3D não aparecer, recarregue a página para reiniciar o motor gráfico.';
-     }
-   }catch(err){console.error(err);if(note)note.textContent='Falha ao iniciar o motor 3D. Recarregue a página; o menu continua disponível.';}
- }
  const start=document.getElementById('start-game');
- if(start)start.addEventListener('click',()=>setTimeout(showArena,0));
- // Rebind navigation independently from gameplay initialization.
- document.querySelectorAll('.menu-btn[data-screen="play"]').forEach(b=>b.addEventListener('click',()=>{home.style.display='none';screens.forEach(s=>s.classList.toggle('active',s===play));back.hidden=false;}));
+ if(start) start.addEventListener('click',()=>{
+   setTimeout(()=>{
+     if(typeof window.tdNavigate==='function') window.tdNavigate('game');
+   },0);
+ });
 })();
 </script>
 </body></html>
