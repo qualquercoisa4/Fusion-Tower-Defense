@@ -1,93 +1,142 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#050a20">
-<title>Fusion TD</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050a20">
+<title>Fusion TD — Defesa de Núcleo</title>
 <style>
-:root{color-scheme:dark;--cyan:#8cf5ff;--blue:#329bff;--panel:rgba(6,15,38,.82);--gold:#e0b77a}
-*{box-sizing:border-box}
-html,body{margin:0;width:100%;min-height:100%;font-family:Arial,Helvetica,sans-serif;background:#030718;color:#eafaff}
-body{min-height:100svh;overflow:hidden}
-button{font:inherit;color:inherit}
-.scene{position:relative;isolation:isolate;min-height:100svh;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#183c76 0,#0b1c43 35%,#040a20 75%,#02040e 100%)}
-.circuit-grid{position:absolute;inset:-15%;z-index:-2;opacity:.78;background:
-linear-gradient(90deg,transparent 49.7%,rgba(70,160,255,.24) 50%,transparent 50.3%),
-linear-gradient(0deg,transparent 49.7%,rgba(70,160,255,.16) 50%,transparent 50.3%),
-repeating-linear-gradient(0deg,transparent 0 43px,rgba(52,131,231,.13) 44px 45px),
-repeating-linear-gradient(90deg,transparent 0 43px,rgba(52,131,231,.13) 44px 45px);
-transform:perspective(700px) rotateX(54deg) scale(1.5);transform-origin:center 60%}
-.circuit-lines{position:absolute;inset:0;z-index:-1;opacity:.6;background:
-linear-gradient(90deg,transparent 0 7%,#1d6ab8 7.1%,transparent 7.3% 17%,#277ad0 17.1%,transparent 17.3% 100%) 0 23%/100% 2px no-repeat,
-linear-gradient(90deg,transparent 0 0%,#287bd0 0.1%,transparent .3% 29%,#45aaff 29.1%,transparent 29.3% 100%) 0 32%/100% 2px no-repeat,
-linear-gradient(90deg,transparent 0 9%,#287bd0 9.1%,transparent 9.3% 66%,#287bd0 66.1%,transparent 66.3% 100%) 0 72%/100% 2px no-repeat,
-linear-gradient(90deg,transparent 0 0%,#287bd0 .1%,transparent .3% 84%,#287bd0 84.1%,transparent 84.3% 100%) 0 83%/100% 2px no-repeat}
-.glow{position:absolute;width:min(70vw,760px);aspect-ratio:1;left:50%;top:45%;transform:translate(-50%,-50%);border-radius:50%;background:#1689ff;filter:blur(120px);opacity:.15;z-index:-1;pointer-events:none}
-.topline{position:absolute;left:5vw;right:5vw;top:24px;display:flex;justify-content:space-between;align-items:center;color:#77caff;font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;opacity:.8}
-.status{display:flex;align-items:center;gap:9px}.dot{width:7px;height:7px;background:#7affcf;box-shadow:0 0 12px #7affcf;border-radius:50%}
-.screen{width:100%;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:76px 22px 35px;text-align:center}
-.brand{position:relative;margin:0;line-height:.78;letter-spacing:.04em;font-weight:950;font-style:italic;text-transform:uppercase;font-size:clamp(4rem,12vw,10rem);color:#d8f7ff;background:linear-gradient(180deg,#fff 0%,#9ce9ff 22%,#397eb6 48%,#d9faff 52%,#4b83bd 78%,#e4fbff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 5px 0 #122a54) drop-shadow(0 0 22px #168bff);-webkit-text-stroke:1px rgba(190,237,255,.38)}
-.brand span{display:block;font-size:.52em;letter-spacing:.22em;margin-top:.18em}
-.subtitle{margin:30px 0 0;color:#b5f8ff;font-size:clamp(.75rem,1.8vw,1.15rem);font-weight:700;letter-spacing:.22em;text-transform:uppercase;text-shadow:0 0 16px #29b9ff}
-.core-wrap{width:clamp(112px,18vw,180px);height:clamp(112px,18vw,180px);margin:38px 0 0;position:relative;display:grid;place-items:center}
-.core{width:54%;height:54%;position:relative;transform:rotate(45deg);border:2px solid #9ffaff;background:linear-gradient(135deg,rgba(37,166,255,.85),rgba(7,25,70,.9));box-shadow:0 0 16px #45d8ff,inset 0 0 24px #5ebdff;animation:corepulse 3s ease-in-out infinite}
-.core:before,.core:after{content:"";position:absolute;inset:13%;border:1px solid #d2ffff;box-shadow:0 0 9px #65eaff}
-.core:after{inset:31%;background:#dfffff;box-shadow:0 0 24px 7px #3dd9ff}
-.ring{position:absolute;inset:5%;border:1px solid rgba(112,221,255,.6);transform:rotate(45deg);box-shadow:0 0 20px rgba(39,148,255,.3)}
-.ring:before,.ring:after{content:"";position:absolute;background:#75eaff;box-shadow:0 0 10px #3adfff}.ring:before{width:1px;height:160%;left:50%;top:-30%}.ring:after{height:1px;width:160%;top:50%;left:-30%}
-.menu{display:flex;gap:clamp(10px,2vw,24px);width:min(920px,100%);margin-top:clamp(30px,6vh,60px)}
-.menu-button{position:relative;flex:1;min-height:86px;padding:18px 10px;border:1px solid #427fa9;background:linear-gradient(180deg,rgba(24,53,80,.95),rgba(5,16,35,.98));clip-path:polygon(10px 0,calc(100% - 10px) 0,100% 14px,100% calc(100% - 14px),calc(100% - 10px) 100%,10px 100%,0 calc(100% - 14px),0 14px);cursor:pointer;text-transform:uppercase;letter-spacing:.16em;font-weight:800;font-size:clamp(.7rem,1.5vw,.95rem);transition:transform .2s,border-color .2s,filter .2s}
-.menu-button:before{content:"";position:absolute;inset:4px;border:1px solid rgba(116,209,255,.15);pointer-events:none}
-.menu-button:hover,.menu-button:focus-visible{transform:translateY(-4px);border-color:var(--cyan);filter:drop-shadow(0 0 12px #198fff);outline:none}
-.menu-button.primary{border:1px solid #d3eaff;background:linear-gradient(180deg,#2b75a2,#102c56 48%,#07162d);box-shadow:inset 0 0 20px rgba(66,177,255,.3);color:#e7fcff}
-.menu-button .symbol{display:block;font-size:1.6rem;margin-bottom:8px;color:#8feaff;text-shadow:0 0 14px #29aaff}
-.menu-button.primary .symbol{color:#f3d9a3}
-.footer{position:absolute;bottom:18px;left:5vw;right:5vw;display:flex;justify-content:space-between;gap:16px;color:#6997c1;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase}
-.overlay{position:fixed;inset:0;z-index:5;display:none;place-items:center;padding:20px;background:rgba(1,5,17,.82);backdrop-filter:blur(10px)}
-.overlay.open{display:grid}.dialog{width:min(440px,100%);padding:30px;border:1px solid #4fbbf1;background:linear-gradient(145deg,#10294c,#050d20);box-shadow:0 0 50px #0879d455;text-align:center}
-.dialog h2{margin:0 0 10px;font-size:1.7rem;letter-spacing:.12em;text-transform:uppercase}.dialog p{color:#9dbdd8;line-height:1.6}.dialog button{margin-top:12px;padding:12px 24px;border:1px solid #80eaff;background:#0e3559;cursor:pointer;text-transform:uppercase;letter-spacing:.15em}
-@keyframes corepulse{0%,100%{filter:brightness(.8)}50%{filter:brightness(1.4)}}
-@media(max-width:600px){.topline{top:15px;font-size:.55rem}.screen{padding-top:70px}.subtitle{letter-spacing:.12em;margin-top:22px}.core-wrap{margin-top:25px}.menu{flex-direction:column;max-width:360px;margin-top:28px;gap:10px}.menu-button{min-height:64px;padding:10px;display:flex;align-items:center;justify-content:center;gap:14px}.menu-button .symbol{font-size:1.2rem;margin:0}.footer{font-size:.5rem;bottom:10px}.brand{font-size:clamp(3.6rem,19vw,6rem)}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+:root{color-scheme:dark;--cyan:#9af5ff;--blue:#39a8ff;--gold:#e5c58c;--ink:#030817;--panel:rgba(5,14,32,.92)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--ink);color:#e8f7ff;font-family:Arial,Helvetica,sans-serif}body{min-height:100svh;overflow:hidden}button{font:inherit;color:inherit;cursor:pointer}button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+#app{position:relative;min-height:100svh;overflow:hidden;background:radial-gradient(ellipse at 50% 43%,#193e70 0,#0a1937 40%,#030817 82%)}#world{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block}
+#app:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(180deg,rgba(1,6,19,.46),transparent 26%,transparent 65%,rgba(1,5,16,.78)),linear-gradient(90deg,rgba(1,6,18,.4),transparent 30%,transparent 70%,rgba(1,6,18,.4))}
+.scanlines{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.12;background:repeating-linear-gradient(0deg,transparent 0 3px,#6dcfff 4px,transparent 5px)}
+.topbar{position:absolute;z-index:4;top:22px;left:clamp(16px,4vw,54px);right:clamp(16px,4vw,54px);display:flex;justify-content:space-between;align-items:center;gap:12px;color:#8cccf0;font-size:.68rem;letter-spacing:.19em;text-transform:uppercase;text-shadow:0 0 12px #248cff}.online{display:flex;align-items:center;gap:9px}.dot{width:7px;height:7px;border-radius:50%;background:#7dffcb;box-shadow:0 0 12px #7dffcb}
+.home{position:relative;z-index:3;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;padding:90px 20px 9vh;background:linear-gradient(180deg,rgba(2,7,21,.25),transparent 35%,rgba(2,7,20,.62) 78%)}
+.logo{position:absolute;top:10%;left:0;right:0;margin:0;font-weight:950;font-style:italic;line-height:.75;letter-spacing:.02em;font-size:clamp(4.2rem,10.8vw,9.4rem);color:#d7f7ff;background:linear-gradient(180deg,#fff 0%,#9ceaff 25%,#438dc9 49%,#d6f8ff 53%,#437fb9 80%,#ecfcff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 4px 0 #102b4d) drop-shadow(0 0 22px #258dff);-webkit-text-stroke:1px #b8eaff65}.logo span{display:block;font-size:.48em;letter-spacing:.28em;margin-top:.22em}
+.tagline{position:absolute;top:calc(10% + clamp(118px,17vw,230px));left:12px;right:12px;margin:0;font-size:clamp(.65rem,1.4vw,1rem);letter-spacing:.28em;text-transform:uppercase;color:#bafaff;text-shadow:0 0 16px #00aaff}
+.menu{display:flex;width:min(850px,100%);gap:clamp(10px,2vw,22px)}.menu-btn{position:relative;flex:1;min-height:82px;padding:14px 10px;border:1px solid #467fa5;background:linear-gradient(180deg,rgba(23,51,76,.95),rgba(3,12,29,.97));clip-path:polygon(12px 0,calc(100% - 12px) 0,100% 14px,100% calc(100% - 14px),calc(100% - 12px) 100%,12px 100%,0 calc(100% - 14px),0 14px);font-size:clamp(.7rem,1.4vw,.9rem);font-weight:800;letter-spacing:.16em;text-transform:uppercase;transition:transform .18s,border-color .18s,filter .18s}.menu-btn:before{content:"";position:absolute;inset:4px;border:1px solid #8bdfff20;pointer-events:none}.menu-btn:hover{transform:translateY(-4px);border-color:var(--cyan);filter:drop-shadow(0 0 12px #1c9cff)}.menu-btn.primary{border-color:#c5f7ff;background:linear-gradient(180deg,#347ea8,#12335c 55%,#06162c);box-shadow:inset 0 0 24px #43b9ff38}.symbol{display:block;font-size:1.55rem;margin-bottom:8px;color:var(--cyan);text-shadow:0 0 14px #36baff}.primary .symbol{color:var(--gold)}
+.footer{position:absolute;z-index:4;bottom:16px;left:clamp(16px,4vw,54px);right:clamp(16px,4vw,54px);display:flex;justify-content:space-between;gap:12px;color:#75a2c9;font-size:.59rem;letter-spacing:.14em;text-transform:uppercase}
+.screen{position:absolute;z-index:6;inset:0;display:none;align-items:center;justify-content:center;padding:78px 20px 40px;background:linear-gradient(180deg,#030918eF,#06152bf2);backdrop-filter:blur(8px);overflow:auto}.screen.active{display:flex}.panel{width:min(820px,100%);padding:clamp(20px,4vw,36px);border:1px solid #438ab7;background:linear-gradient(145deg,rgba(14,37,65,.98),rgba(3,10,25,.98));box-shadow:0 0 50px #168dff22,inset 0 0 28px #279dff0c;position:relative}.panel:before{content:"";position:absolute;inset:6px;border:1px solid #8edfff18;pointer-events:none}.panel h2{margin:0 0 8px;font-size:clamp(1.5rem,4vw,2.4rem);letter-spacing:.12em;text-transform:uppercase;color:#d9f8ff}.desc{margin:0 0 24px;color:#9dbedb;line-height:1.55}.panel-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}.action{border:1px solid #559bc5;background:#0a2947;padding:13px 19px;letter-spacing:.1em;text-transform:uppercase;font-size:.78rem;font-weight:700}.action:hover{border-color:var(--cyan);box-shadow:0 0 15px #269cff33}.action.primary{background:linear-gradient(180deg,#286e97,#103252);border-color:#9beeff}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.choice{min-height:130px;text-align:left;padding:17px 14px;border:1px solid #315f82;background:linear-gradient(145deg,#112c4b,#071329);cursor:pointer}.choice.selected,.choice:hover{border-color:var(--cyan);box-shadow:inset 0 0 22px #168cff20}.choice strong{display:block;color:#d8f8ff;letter-spacing:.08em;margin-bottom:8px}.choice small{color:#9bbbd7;line-height:1.45}.stats{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.stat{flex:1;min-width:100px;border:1px solid #254c6e;padding:12px;background:#061329}.stat small{display:block;color:#8bb2d2;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase}.stat strong{display:block;margin-top:6px;color:#b9faff;font-size:1.2rem}.back{position:absolute;top:22px;left:clamp(16px,4vw,54px);z-index:8;border:1px solid #477fa2;background:#07172be8;padding:10px 14px;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase}
+#game-screen{padding:68px 12px 12px;align-items:stretch}.game-layout{display:flex;flex-direction:column;width:min(1200px,100%);gap:10px}.hud{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 15px;background:#07162bec;border:1px solid #3a7198}.hud-values{display:flex;gap:18px;flex-wrap:wrap}.hud strong{color:#a8f6ff}.gameboard-wrap{position:relative;flex:1;min-height:240px;border:1px solid #397ba4;background:#071225;overflow:hidden}.gameboard{display:block;width:100%;height:100%;min-height:240px;cursor:crosshair}.game-controls{display:flex;align-items:center;flex-wrap:wrap;gap:9px;padding:10px;background:#07162bec;border:1px solid #3a7198}.game-controls span{color:#a3c8e2;font-size:.8rem;margin-right:auto}.tower-btn{border:1px solid #4a88ad;background:#102d4a;padding:10px 13px;font-size:.75rem}.tower-btn.selected{border-color:#a5f8ff;box-shadow:0 0 12px #219cff55}.notice{color:#9eddea;font-size:.78rem;min-height:1em}
+@media(max-width:620px){.home{justify-content:flex-end;padding-bottom:10vh}.logo{top:13%;font-size:clamp(4rem,18vw,6.5rem)}.tagline{top:calc(13% + 125px);letter-spacing:.14em}.menu{flex-direction:column;max-width:360px;gap:9px}.menu-btn{min-height:57px;display:flex;align-items:center;justify-content:center;gap:13px;padding:9px}.symbol{font-size:1.2rem;margin:0}.footer{font-size:.48rem;bottom:8px}.footer span:last-child{display:none}.topbar{top:13px;font-size:.53rem}.cards{grid-template-columns:1fr}.choice{min-height:80px}.panel{padding:23px 18px}.back{top:12px}.hud{font-size:.78rem}.game-controls span{width:100%}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important}}
 </style>
 </head>
 <body>
-<main class="scene">
-  <div class="circuit-grid" aria-hidden="true"></div><div class="circuit-lines" aria-hidden="true"></div><div class="glow" aria-hidden="true"></div>
-  <div class="topline"><span>FUSION SYSTEMS // 001</span><span class="status"><i class="dot"></i> NÚCLEO ONLINE</span></div>
-  <section class="screen" aria-label="Menu principal Fusion TD">
-    <h1 class="brand">FUSION<span>TD</span></h1>
-    <p class="subtitle">Defenda. Evolua. Sobreviva.</p>
-    <div class="core-wrap" aria-hidden="true"><div class="ring"></div><div class="core"></div></div>
-    <nav class="menu" aria-label="Menu do jogo">
-      <button class="menu-button" data-action="loja"><span class="symbol" aria-hidden="true">▤</span><span>Loja</span></button>
-      <button class="menu-button primary" data-action="jogar"><span class="symbol" aria-hidden="true">▶</span><span>Jogar</span></button>
-      <button class="menu-button" data-action="torres"><span class="symbol" aria-hidden="true">♜</span><span>Torres</span></button>
-    </nav>
-  </section>
-  <footer class="footer"><span>FUSION TD · PROTÓTIPO 0.1</span><span>ENERGIA ESTÁVEL // AGUARDANDO COMANDO</span></footer>
+<main id="app">
+<canvas id="world" aria-label="Laboratório futurista 3D com torre de energia"></canvas><div class="scanlines"></div>
+<header class="topbar"><span>FUSION SYSTEMS // 001</span><span class="online"><i class="dot"></i> NÚCLEO ONLINE</span></header>
+<section class="home" id="home">
+<h1 class="logo">FUSION<span>TD</span></h1><p class="tagline">Defenda. Evolua. Sobreviva.</p>
+<nav class="menu" aria-label="Menu principal">
+<button class="menu-btn" data-screen="shop"><span class="symbol">▤</span><span>Loja</span></button>
+<button class="menu-btn primary" data-screen="play"><span class="symbol">▶</span><span>Jogar</span></button>
+<button class="menu-btn" data-screen="towers"><span class="symbol">♜</span><span>Torres</span></button>
+</nav>
+</section>
+<footer class="footer"><span>FUSION TD · PROTÓTIPO 0.2</span><span>LABORATÓRIO // SISTEMAS ESTÁVEIS</span></footer>
+<button class="back" id="back" hidden>← Menu principal</button>
+<section class="screen" id="play-screen"><div class="panel"><h2>Seleção de missão</h2><p class="desc">Escolha uma arena para iniciar a defesa do núcleo.</p><div class="cards"><button class="choice selected" data-map="lab"><strong>01 / LABORATÓRIO</strong><small>Instalação industrial. Corredor de teste e núcleo de energia.</small></button><button class="choice" data-map="outpost"><strong>02 / POSTO AVANÇADO</strong><small>Zona externa de contenção. Ambiente em preparação.</small></button><button class="choice" data-map="reactor"><strong>03 / REATOR</strong><small>Complexo energético. Ambiente em preparação.</small></button></div><div class="stats"><div class="stat"><small>Mapa selecionado</small><strong id="map-name">Laboratório</strong></div><div class="stat"><small>Objetivo</small><strong>Proteja a base</strong></div><div class="stat"><small>Estado</small><strong>Pronto</strong></div></div><div class="panel-actions"><button class="action primary" id="start-game">Iniciar defesa →</button><button class="action" data-home>Cancelar</button></div></div></section>
+<section class="screen" id="shop-screen"><div class="panel"><h2>Loja de suprimentos</h2><p class="desc">Use os créditos de missão para preparar sua defesa. A economia e as compras persistentes serão adicionadas numa próxima etapa.</p><div class="cards"><div class="choice"><strong>⚡ Célula de energia</strong><small>Fonte de energia para futuras melhorias.</small></div><div class="choice"><strong>⌁ Liga reforçada</strong><small>Material para aumentar a resistência das torres.</small></div><div class="choice"><strong>◈ Módulo de precisão</strong><small>Componente para melhorar o alcance.</small></div></div><div class="stats"><div class="stat"><small>Créditos</small><strong>250</strong></div><div class="stat"><small>Inventário</small><strong>Protótipo</strong></div></div><div class="panel-actions"><button class="action" data-home>Voltar ao menu</button></div></div></section>
+<section class="screen" id="towers-screen"><div class="panel"><h2>Arquivo de torres</h2><p class="desc">Selecione uma torre durante a partida e clique em uma área livre fora do caminho para posicioná-la.</p><div class="cards"><div class="choice"><strong>01 / SENTINELA</strong><small>Dano equilibrado e alcance médio. Custo: 60 créditos.</small></div><div class="choice"><strong>02 / CANHÃO</strong><small>Dano elevado e disparo lento. Custo: 100 créditos. Em desenvolvimento.</small></div><div class="choice"><strong>03 / ARCO DE PLASMA</strong><small>Disparo rápido e alcance longo. Custo: 140 créditos. Em desenvolvimento.</small></div></div><div class="panel-actions"><button class="action primary" data-screen="play">Escolher missão</button><button class="action" data-home>Voltar ao menu</button></div></div></section>
+<section class="screen" id="game-screen"><div class="game-layout"><div class="hud"><div class="hud-values"><span>CRÉDITOS <strong id="credits">180</strong></span><span>BASE <strong id="lives">20</strong></span><span>ONDA <strong id="wave">0</strong></span></div><button class="action primary" id="wave-btn">Iniciar onda</button></div><div class="gameboard-wrap"><canvas class="gameboard" id="gameboard" aria-label="Campo de batalha. Clique em uma área livre para construir a torre selecionada."></canvas></div><div class="game-controls"><span id="game-notice" class="notice">Selecione uma torre e clique no terreno livre para construí-la.</span><button class="tower-btn selected" data-tower="sentinel">Sentinela · 60</button><button class="tower-btn" data-tower="cannon">Canhão · 100</button><button class="tower-btn" id="exit-game">Sair da partida</button></div></div></section>
 </main>
-<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
-  <div class="dialog"><h2 id="dialog-title">Em desenvolvimento</h2><p id="dialog-copy">Esta área será implementada na próxima etapa.</p><button id="close-dialog">Voltar ao menu</button></div>
-</div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script>
-const overlay=document.querySelector('#overlay');
-const title=document.querySelector('#dialog-title');
-const copy=document.querySelector('#dialog-copy');
-const messages={
-  jogar:['Preparando defesa','A base do jogo está pronta. Na próxima etapa, vamos criar o mapa, os inimigos e as primeiras ondas.'],
-  loja:['Loja de equipamentos','Aqui ficarão as melhorias e os recursos desbloqueáveis.'],
-  torres:['Arquivo de torres','Aqui será possível consultar e selecionar as torres defensivas.']
-};
-document.querySelectorAll('[data-action]').forEach(button=>button.addEventListener('click',()=>{
-  const [heading,description]=messages[button.dataset.action];
-  title.textContent=heading;copy.textContent=description;overlay.classList.add('open');
-  document.querySelector('#close-dialog').focus();
-}));
-document.querySelector('#close-dialog').addEventListener('click',()=>overlay.classList.remove('open'));
-overlay.addEventListener('click',event=>{if(event.target===overlay)overlay.classList.remove('open')});
-document.addEventListener('keydown',event=>{if(event.key==='Escape')overlay.classList.remove('open')});
+(()=> {
+const $=s=>document.querySelector(s), screens=[...document.querySelectorAll('.screen')],home=$('#home'),back=$('#back');
+let current='home';
+function show(name){current=name;home.style.display=name==='home'?'flex':'none';screens.forEach(s=>s.classList.toggle('active',s.id===name+'-screen'));back.hidden=name==='home';if(name==='game')resizeGame();if(name==='home')resize3D();}
+document.querySelectorAll('[data-screen]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.screen)));
+document.querySelectorAll('[data-home]').forEach(b=>b.addEventListener('click',()=>show('home')));
+back.addEventListener('click',()=>show('home'));
+const mapNames={lab:'Laboratório',outpost:'Posto avançado',reactor:'Reator'};let chosenMap='lab';
+document.querySelectorAll('[data-map]').forEach(b=>b.addEventListener('click',()=>{chosenMap=b.dataset.map;document.querySelectorAll('[data-map]').forEach(x=>x.classList.toggle('selected',x===b));$('#map-name').textContent=mapNames[chosenMap]}));
+$('#start-game').addEventListener('click',()=>{resetGame();show('game')});
+document.querySelectorAll('[data-screen="play"]').forEach(b=>b.addEventListener('click',()=>show('play')));
+$('#exit-game').addEventListener('click',()=>{if(gameTimer)clearInterval(gameTimer);show('home')});
+
+// Decorative real-time Three.js laboratory: workbench, bolted plates, reactor tower, pipes, lamps and tools.
+const canvas=$('#world');let renderer,scene,camera,rig,raf=0,threeOK=false;
+function mat(color,metalness=0.3,roughness=.5,emissive=0,emissiveIntensity=0){return new THREE.MeshStandardMaterial({color,metalness,roughness,emissive,emissiveIntensity})}
+function box(parent,w,h,d,material,x,y,z,bevel=false){const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;parent.add(mesh);return mesh}
+function cylinder(parent,r1,r2,h,material,x,y,z,segments=16){const mesh=new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,segments),material);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;parent.add(mesh);return mesh}
+function pipe(parent,points,r,material){const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p)));const mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,48,r,8,false),material);mesh.castShadow=true;parent.add(mesh);return mesh}
+function buildLab(){
+ if(!window.THREE)return;try{
+ scene=new THREE.Scene();scene.background=new THREE.Color('#040b1b');scene.fog=new THREE.Fog('#07152b',13,30);
+ camera=new THREE.PerspectiveCamera(38,innerWidth/innerHeight,.1,100);camera.position.set(8,7.2,11.5);camera.lookAt(0,1.35,0);
+ renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false});renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));renderer.setSize(innerWidth,innerHeight);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.18;
+ scene.add(new THREE.HemisphereLight(0x8dcfff,0x17100b,2.0));
+ const key=new THREE.DirectionalLight(0xffd6a0,3.2);key.position.set(-5,9,5);key.castShadow=true;key.shadow.mapSize.set(1024,1024);scene.add(key);
+ const blue=new THREE.PointLight(0x168aff,30,13);blue.position.set(0,3,0);scene.add(blue);
+ const warm=new THREE.PointLight(0xffa84d,22,11);warm.position.set(-5,4,1);scene.add(warm);
+ const steel=mat('#536271',.82,.36),dark=mat('#151f2b',.72,.42),edge=mat('#9b8b6c',.8,.3),gold=mat('#b59a65',.8,.29),black=mat('#080f1a',.45,.4),cyan=mat('#43eaff',.35,.22,0x1bcfff,3.5),cyanDim=mat('#126b96',.65,.3,0x078cff,1.4),floor=mat('#202b36',.5,.62),rubber=mat('#11171d',.1,.8);
+ // concrete floor and steel grid
+ box(scene,24,.35,18,floor,0,-.45,0);const grid=new THREE.GridHelper(24,36,0x2673a7,0x173653);grid.position.y=-.265;scene.add(grid);
+ // wall/backdrop industrial riveted panels
+ box(scene,19,4.7,.35,dark,0,2,-5.1);
+ for(let x=-8.5;x<=8.5;x+=2.1){box(scene,1.98,4.45,.07,steel,x,2,-4.89);for(let y=.25;y<4.2;y+=.9)cylinder(scene,.045,.045,.035,edge,x-.82,y,-4.82,8)}
+ box(scene,19,.18,.5,edge,0,4.42,-4.83);
+ // workbench tabletop and legs
+ box(scene,7.5,.35,4.4,steel,0,1.0,0);box(scene,7.65,.1,4.5,edge,0,1.2,0);box(scene,7.1,.08,4.05,dark,0,1.26,0);
+ for(const x of [-3.2,3.2])for(const z of [-1.7,1.7]){box(scene,.32,1.1,.32,dark,x,.45,z);box(scene,.44,.12,.44,edge,x,.05,z)}
+ // etched circuit tracks on table as luminous thin strips
+ for(let i=-3;i<=3;i++){box(scene,2.2,.015,.022,cyanDim,i*.48,1.315,1.25);box(scene,.02,.015,1.25,cyanDim,i*.48,1.315,.62)}
+ // reactor base stack
+ cylinder(scene,1.45,1.62,.34,dark,0,1.52,0,12);cylinder(scene,1.32,1.45,.16,gold,0,1.76,0,12);cylinder(scene,1.12,1.27,.28,steel,0,1.95,0,12);
+ // core housing and segmented blue reactor column
+ cylinder(scene,.83,1.02,.24,edge,0,2.19,0,10);cylinder(scene,.7,.78,1.55,dark,0,3.0,0,10);cylinder(scene,.59,.69,1.43,steel,0,3.0,0,10);
+ for(let y=2.42;y<=3.58;y+=.38){cylinder(scene,.63,.63,.065,gold,0,y,0,10);for(let i=0;i<8;i++){const a=i*Math.PI/4;box(scene,.12,.24,.08,cyan,Math.sin(a)*.65,y,Math.cos(a)*.65).rotation.y=a}}
+ cylinder(scene,.52,.56,.22,edge,0,3.79,0,10);cylinder(scene,.39,.45,.28,cyanDim,0,3.99,0,10);cylinder(scene,.3,.32,.16,cyan,0,4.17,0,10);cylinder(scene,.13,.18,.42,steel,0,4.42,0,8);
+ // reactor cap aerial pins
+ for(let x of [-.18,.18])cylinder(scene,.025,.025,.55,edge,x,4.67,0,8);
+ // radial armored supports around core
+ for(let i=0;i<4;i++){const a=i*Math.PI/2;const support=box(scene,.38,1.15,.42,gold,Math.sin(a)*1.05,2.1,Math.cos(a)*1.05);support.rotation.y=-a;const brace=box(scene,.16,.85,.2,steel,Math.sin(a)*1.45,2.45,Math.cos(a)*1.45);brace.rotation.z=Math.sin(a)*-.48;brace.rotation.x=Math.cos(a)*.48;cylinder(scene,.1,.1,.14,cyanDim,Math.sin(a)*1.52,2.87,Math.cos(a)*1.52,10)}
+ // hydraulic arms, tubes and hoses across bench
+ for(const side of [-1,1]){pipe(scene,[[side*1.25,2.2,-.2],[side*1.85,2.8,-.2],[side*2.35,2.5,-.2],[side*2.75,1.5,.2]],.105,edge);pipe(scene,[[side*1.6,1.5,.7],[side*2.35,1.42,1.15],[side*3.25,1.38,.95],[side*3.7,1.2,.4]],.07,mat('#754d35',.65,.4));pipe(scene,[[side*1.6,1.48,.85],[side*2.35,1.4,1.3],[side*3.35,1.35,1.05]],.035,cyanDim)}
+ // gears as toothed-looking rings on table front left/right
+ function gear(x,z,r){cylinder(scene,r,r,.11,edge,x,1.39,z,20);cylinder(scene,r*.68,r*.68,.13,dark,x,1.45,z,16);cylinder(scene,r*.24,r*.24,.14,steel,x,1.47,z,12);for(let i=0;i<12;i++){const a=i*Math.PI/6;const tooth=box(scene,.14,.1,.17,gold,x+Math.cos(a)*(r+.035),1.43,z+Math.sin(a)*(r+.035));tooth.rotation.y=-a}}
+ gear(-2.25,1.05,.38);gear(-2.95,1.25,.27);gear(2.35,1.15,.34);gear(2.95,.9,.22);
+ // toolbox, loose tools and crates on the floor around the table
+ box(scene,1.45,.6,.8,dark,-5.0,.0,-.8);box(scene,1.48,.1,.82,steel,-5,.34,-.8);box(scene,1.2,.05,.06,edge,-5,.42,-.8);
+ box(scene,1.25,.72,.72,steel,4.85,.1,-.4);box(scene,1.28,.09,.76,edge,4.85,.49,-.4);box(scene,1.0,.05,.12,dark,4.85,.55,-.4);
+ // floor conduit cables
+ pipe(scene,[[-5,.0,2.7],[-4,.03,3.5],[-2,.03,3.4],[0,.04,2.9],[2,.03,3.5],[4,.03,3.2],[5,.03,2.4]],.07,mat('#6f4934',.6,.4));
+ // hanging industrial lamps
+ for(const x of [-4.5,4.5]){cylinder(scene,.025,.025,1.0,black,x,4.6,-1.8,8);cylinder(scene,.28,.08,.22,edge,x,4.1,-1.8,16);const lamp=new THREE.PointLight(0xffbd74,18,5);lamp.position.set(x,3.9,-1.8);scene.add(lamp)}
+ // subtle floor equipment bolts
+ for(let x=-5;x<=5;x+=1)for(let z=-3;z<=3;z+=1)cylinder(scene,.025,.025,.018,edge,x,-.255,z,8);
+ rig=new THREE.Group();rig.add(new THREE.Object3D());scene.add(rig);threeOK=true;
+ function render(){raf=requestAnimationFrame(render);if(current==='home'){const t=performance.now()*.00018;camera.position.x=8+Math.sin(t)*.35;camera.position.y=7.1+Math.sin(t*1.4)*.12;camera.lookAt(0,1.8,0);blue.intensity=27+Math.sin(t*4)*3;renderer.render(scene,camera)}}
+ render();resize3D();
+ }catch(e){console.warn('3D scene unavailable',e)}
+}
+function resize3D(){if(!renderer||!camera)return;renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix()}
+window.addEventListener('resize',()=>{resize3D();resizeGame()});
+buildLab();
+
+// Lightweight playable tower-defense prototype: path, waves, targeting and tower placement.
+const board=$('#gameboard'),ctx=board.getContext('2d');let towers=[],enemies=[],shots=[],credits=180,lives=20,wave=0,spawnLeft=0,spawnClock=0,gameTimer=null,selectedTower='sentinel',running=false,boardW=900,boardH=430,lastTick=0;
+const path=[[-.04,.43],[.18,.43],[.18,.72],[.43,.72],[.43,.25],[.7,.25],[.7,.55],[1.04,.55]];
+function resizeGame(){if(!board||!board.clientWidth)return;const r=board.getBoundingClientRect();board.width=Math.floor(r.width*Math.min(devicePixelRatio,1.5));board.height=Math.floor(r.height*Math.min(devicePixelRatio,1.5));boardW=board.width;boardH=board.height;drawGame()}
+function coords(p){return [p[0]*boardW,p[1]*boardH]}
+function drawGame(){if(!ctx||!boardW)return;ctx.clearRect(0,0,boardW,boardH);ctx.fillStyle='#0a1928';ctx.fillRect(0,0,boardW,boardH);const cell=Math.max(22,boardW/30);ctx.strokeStyle='#173852';ctx.lineWidth=1;for(let x=0;x<boardW;x+=cell){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,boardH);ctx.stroke()}for(let y=0;y<boardH;y+=cell){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(boardW,y);ctx.stroke()}
+ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#5c6a70';ctx.lineWidth=Math.min(boardW,boardH)*.115;ctx.beginPath();path.forEach((p,i)=>{const [x,y]=coords(p);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();ctx.strokeStyle='#d2b67b';ctx.lineWidth=3;ctx.stroke();
+path.forEach((p,i)=>{const [x,y]=coords(p);ctx.fillStyle=i===0?'#70ffcf':i===path.length-1?'#ff6c72':'#233d50';ctx.beginPath();ctx.arc(x,y,Math.max(5,cell*.22),0,Math.PI*2);ctx.fill()});
+towers.forEach(t=>{const x=t.x*boardW,y=t.y*boardH;ctx.beginPath();ctx.fillStyle='#133f5c';ctx.strokeStyle='#80edff';ctx.lineWidth=2;ctx.arc(x,y,t.range*boardW,0,Math.PI*2);ctx.globalAlpha=.13;ctx.fill();ctx.globalAlpha=1;ctx.strokeStyle='#367c9d';ctx.beginPath();ctx.arc(x,y,Math.max(10,cell*.38),0,Math.PI*2);ctx.fillStyle=t.type==='cannon'?'#b69b69':'#54dfff';ctx.fill();ctx.stroke();ctx.fillStyle='#061522';ctx.fillRect(x-3,y-8,6,16)});
+enemies.forEach(e=>{const x=e.x*boardW,y=e.y*boardH;ctx.fillStyle='#ff596b';ctx.strokeStyle='#ffd0d4';ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,Math.max(6,cell*.2),0,Math.PI*2);ctx.fill();ctx.stroke();ctx.fillStyle='#17212a';ctx.fillRect(x-12,y- Math.max(11,cell*.34),24,4);ctx.fillStyle='#72ff9a';ctx.fillRect(x-12,y-Math.max(11,cell*.34),24*Math.max(0,e.hp/e.maxHp),4)});
+shots.forEach(s=>{ctx.strokeStyle='#8af7ff';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(s.x*boardW,s.y*boardH);ctx.lineTo(s.tx*boardW,s.ty*boardH);ctx.stroke()});
+ctx.fillStyle='#a7c8dc';ctx.font=Math.max(11,boardW*.014)+'px Arial';ctx.fillText('NÚCLEO',boardW-78,boardH*.55-15)}
+function updateHud(){$('#credits').textContent=credits;$('#lives').textContent=lives;$('#wave').textContent=wave}
+function resetGame(){if(gameTimer)clearInterval(gameTimer);towers=[];enemies=[];shots=[];credits=180;lives=20;wave=0;spawnLeft=0;spawnClock=0;running=false;selectedTower='sentinel';document.querySelectorAll('[data-tower]').forEach(b=>b.classList.toggle('selected',b.dataset.tower===selectedTower));$('#wave-btn').disabled=false;$('#wave-btn').textContent='Iniciar onda';$('#game-notice').textContent='Selecione uma torre e clique no terreno livre para construí-la.';updateHud();resizeGame();gameTimer=setInterval(tick,50)}
+document.querySelectorAll('[data-tower]').forEach(b=>b.addEventListener('click',()=>{selectedTower=b.dataset.tower;document.querySelectorAll('[data-tower]').forEach(x=>x.classList.toggle('selected',x===b));$('#game-notice').textContent=selectedTower==='sentinel'?'Sentinela selecionada: custo 60 créditos.':'Canhão selecionado: custo 100 créditos.'}));
+board.addEventListener('click',e=>{if(current!=='game'||lives<=0)return;const r=board.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;const onPath=path.some((p,i)=>{if(i===0)return false;const a=path[i-1],b=path[i];const dx=b[0]-a[0],dy=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*dx+(y-a[1])*dy)/(dx*dx+dy*dy)));return Math.hypot(x-(a[0]+t*dx),y-(a[1]+t*dy))<.075});if(onPath){$('#game-notice').textContent='Não é possível construir sobre o caminho dos inimigos.';return}const cost=selectedTower==='cannon'?100:60;if(credits<cost){$('#game-notice').textContent='Créditos insuficientes para esta torre.';return}if(towers.some(t=>Math.hypot(t.x-x,t.y-y)<.055)){ $('#game-notice').textContent='Já existe uma torre nesse local.';return}towers.push({x,y,type:selectedTower,range:selectedTower==='cannon'?.17:.14,damage:selectedTower==='cannon'?3:1,cooldown:0,rate:selectedTower==='cannon'?17:9});credits-=cost;updateHud();drawGame();$('#game-notice').textContent='Torre construída. Inicie uma onda para atacar.'});
+$('#wave-btn').addEventListener('click',()=>{if(lives<=0){resetGame();return}if(spawnLeft>0||enemies.length){$('#game-notice').textContent='A onda atual ainda não terminou.';return}wave++;spawnLeft=5+wave*2;spawnClock=0;running=true;$('#wave-btn').textContent='Onda em andamento';$('#wave-btn').disabled=true;$('#game-notice').textContent='Onda '+wave+' em andamento: as torres atacam automaticamente.';updateHud()});
+function pointAt(distance){let d=distance;for(let i=1;i<path.length;i++){const a=path[i-1],b=path[i],len=Math.hypot((b[0]-a[0])*boardW,(b[1]-a[1])*boardH);if(d<=len){const t=d/len;return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t]}d-=len}return path[path.length-1]}
+function tick(){if(current!=='game'){return}if(spawnLeft>0){spawnClock++;if(spawnClock>24){const total=path.slice(1).reduce((sum,p,i)=>sum+Math.hypot((p[0]-path[i][0])*boardW,(p[1]-path[i][1])*boardH),0);enemies.push({dist:0,total,speed:Math.max(1.1,boardW*.0018),hp:wave>3?5:3,maxHp:wave>3?5:3,x:path[0][0],y:path[0][1]});spawnLeft--;spawnClock=0}}
+enemies.forEach(e=>{e.dist+=e.speed;const p=pointAt(e.dist);e.x=p[0];e.y=p[1]});for(let i=enemies.length-1;i>=0;i--){if(enemies[i].dist>=enemies[i].total){enemies.splice(i,1);lives--;updateHud();if(lives<=0){$('#game-notice').textContent='Base destruída. Reinicie para tentar novamente.';$('#wave-btn').disabled=false;$('#wave-btn').textContent='Reiniciar partida';spawnLeft=0}}}
+shots=[];towers.forEach(t=>{if(t.cooldown>0)t.cooldown--;if(t.cooldown>0)return;const target=enemies.find(e=>Math.hypot((e.x-t.x)*boardW,(e.y-t.y)*boardH)<t.range*boardW);if(target){target.hp-=t.damage;t.cooldown=t.rate;shots.push({x:t.x,y:t.y,tx:target.x,ty:target.y});if(target.hp<=0){enemies.splice(enemies.indexOf(target),1);credits+=12;updateHud()}}});if(spawnLeft===0&&enemies.length===0&&wave>0&&lives>0){$('#wave-btn').disabled=false;$('#wave-btn').textContent='Próxima onda';$('#game-notice').textContent='Onda concluída. +12 créditos por inimigo abatido.'}drawGame()}
+window.addEventListener('keydown',e=>{if(e.key==='Escape'&&current!=='home'){if(current==='game'&&gameTimer)clearInterval(gameTimer);show('home')}});
+})();
 </script>
-</body>
-</html>
+</body></html>
