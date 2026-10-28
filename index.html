@@ -226,4 +226,54 @@ window.addEventListener('resize',tdResize);window.addEventListener('orientationc
 
 })();
 </script>
+
+<script>
+// Resilient navigation fallback: keeps menu usable even if the 3D renderer fails on a mobile device.
+(function(){
+ const home=document.getElementById('home');
+ const screens=[...document.querySelectorAll('.screen')];
+ const back=document.getElementById('back');
+ function openScreen(name){
+   if(name==='game' && !window.THREE){alert('O motor 3D não carregou. Verifique a conexão e recarregue a página.');return;}
+   home.style.display=name==='home'?'flex':'none';
+   screens.forEach(s=>s.classList.toggle('active',s.id===name+'-screen'));
+   back.hidden=name==='home';
+   if(name==='game') setTimeout(()=>window.dispatchEvent(new Event('resize')),80);
+   if(name==='home') setTimeout(()=>window.dispatchEvent(new Event('resize')),80);
+ }
+ document.querySelectorAll('.menu-btn[data-screen]').forEach(b=>b.addEventListener('click',()=>openScreen(b.dataset.screen)));
+ document.querySelectorAll('[data-home]').forEach(b=>b.addEventListener('click',()=>openScreen('home')));
+ document.querySelectorAll('[data-screen="play"]').forEach(b=>b.addEventListener('click',()=>openScreen('play')));
+ back.addEventListener('click',()=>openScreen('home'));
+ // If WebGL cannot initialize, retain the workshop-like background using a bright industrial fallback.
+ const world=document.getElementById('world');
+ if(world){
+   world.style.background='radial-gradient(ellipse at 50% 44%, #1b6892 0%, #17425e 24%, #9fb8c2 25%, #d9e7ec 65%, #b6cbd3 100%)';
+   const drawFallback=()=>{
+     if(world.dataset.fallbackDrawn==='1')return;
+     try{
+       const c=world.getContext('2d'); if(!c)return;
+       world.dataset.fallbackDrawn='1';
+       const w=world.width=innerWidth,hh=world.height=innerHeight;
+       c.fillStyle='#d9e7ec';c.fillRect(0,0,w,hh);
+       const grad=c.createLinearGradient(0,0,0,hh);grad.addColorStop(0,'#c8e0e9');grad.addColorStop(1,'#829da9');c.fillStyle=grad;c.fillRect(0,0,w,hh);
+       c.fillStyle='#8299a5';c.fillRect(0,hh*.30,w,hh*.35);
+       for(let x=0;x<w;x+=Math.max(70,w*.07)){c.fillStyle=x%2?'#a9bdc5':'#91a8b3';c.fillRect(x,hh*.28,Math.max(3,w*.002),hh*.37);c.fillStyle='#e3f1f5';c.fillRect(x+6,hh*.31,Math.max(20,w*.025),hh*.02)}
+       // Steel workbench
+       c.fillStyle='#637e8d';c.fillRect(w*.18,hh*.56,w*.64,hh*.08);c.fillStyle='#d3e5eb';c.fillRect(w*.18,hh*.54,w*.64,hh*.025);
+       c.fillStyle='#526b79';c.fillRect(w*.22,hh*.63,w*.035,hh*.18);c.fillRect(w*.74,hh*.63,w*.035,hh*.18);
+       // Glowing central reactor
+       c.save();c.shadowColor='#16cfff';c.shadowBlur=30;c.fillStyle='#25b8d9';c.fillRect(w*.46,hh*.28,w*.08,hh*.27);c.restore();
+       c.fillStyle='#718d9a';c.fillRect(w*.43,hh*.52,w*.14,hh*.07);c.fillStyle='#f1f8fa';c.fillRect(w*.445,hh*.31,w*.11,hh*.02);
+       c.fillStyle='#7defff';c.fillRect(w*.47,hh*.34,w*.06,hh*.18);
+       // pipes and cyan status lights
+       c.strokeStyle='#b4c9d0';c.lineWidth=Math.max(5,w*.006);c.beginPath();c.moveTo(w*.30,hh*.30);c.lineTo(w*.30,hh*.48);c.lineTo(w*.43,hh*.48);c.moveTo(w*.70,hh*.30);c.lineTo(w*.70,hh*.46);c.lineTo(w*.57,hh*.46);c.stroke();
+       c.fillStyle='#1cb6d3';for(let i=0;i<9;i++)c.fillRect(w*(.23+i*.065),hh*.67,Math.max(3,w*.004),hh*.012);
+     }catch(e){}
+   };
+   // Draw fallback only if the WebGL canvas remains blank/unavailable.
+   setTimeout(()=>{if(!window.THREE || !world.getContext('webgl2')&&!world.getContext('webgl'))drawFallback()},1200);
+ }
+})();
+</script>
 </body></html>
