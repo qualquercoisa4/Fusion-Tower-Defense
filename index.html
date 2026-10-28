@@ -142,6 +142,7 @@ buildLab();
 
 // 3D tower-defense game. Orthographic tactical camera, raycast placement, three enemy classes and one upgrade branch per tower.
 const board=$('#gameboard');
+function resizeGame(){tdResize()}
 let tdRenderer,tdScene,tdCamera,tdRaycaster,tdGround,tdFrame=0,tdReady=false,tdTimer=null;
 let tdTowers=[],tdEnemies=[],tdProjectiles=[],tdEffects=[],tdCredits=220,tdLives=20,tdWave=0,tdSpawning=0,tdSpawnTick=0,tdSelectedType='shooter',tdSelectedTower=null,tdWaveActive=false,tdGameOver=false,tdLast=0,tdPath=[],tdPathLength=0;
 const V=THREE.Vector3;
