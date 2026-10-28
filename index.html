@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#050a20">
+<title>Fusion TD</title>
+<style>
+:root{color-scheme:dark;--cyan:#8cf5ff;--blue:#329bff;--panel:rgba(6,15,38,.82);--gold:#e0b77a}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;min-height:100%;font-family:Arial,Helvetica,sans-serif;background:#030718;color:#eafaff}
+body{min-height:100svh;overflow:hidden}
+button{font:inherit;color:inherit}
+.scene{position:relative;isolation:isolate;min-height:100svh;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#183c76 0,#0b1c43 35%,#040a20 75%,#02040e 100%)}
+.circuit-grid{position:absolute;inset:-15%;z-index:-2;opacity:.78;background:
+linear-gradient(90deg,transparent 49.7%,rgba(70,160,255,.24) 50%,transparent 50.3%),
+linear-gradient(0deg,transparent 49.7%,rgba(70,160,255,.16) 50%,transparent 50.3%),
+repeating-linear-gradient(0deg,transparent 0 43px,rgba(52,131,231,.13) 44px 45px),
+repeating-linear-gradient(90deg,transparent 0 43px,rgba(52,131,231,.13) 44px 45px);
+transform:perspective(700px) rotateX(54deg) scale(1.5);transform-origin:center 60%}
+.circuit-lines{position:absolute;inset:0;z-index:-1;opacity:.6;background:
+linear-gradient(90deg,transparent 0 7%,#1d6ab8 7.1%,transparent 7.3% 17%,#277ad0 17.1%,transparent 17.3% 100%) 0 23%/100% 2px no-repeat,
+linear-gradient(90deg,transparent 0 0%,#287bd0 0.1%,transparent .3% 29%,#45aaff 29.1%,transparent 29.3% 100%) 0 32%/100% 2px no-repeat,
+linear-gradient(90deg,transparent 0 9%,#287bd0 9.1%,transparent 9.3% 66%,#287bd0 66.1%,transparent 66.3% 100%) 0 72%/100% 2px no-repeat,
+linear-gradient(90deg,transparent 0 0%,#287bd0 .1%,transparent .3% 84%,#287bd0 84.1%,transparent 84.3% 100%) 0 83%/100% 2px no-repeat}
+.glow{position:absolute;width:min(70vw,760px);aspect-ratio:1;left:50%;top:45%;transform:translate(-50%,-50%);border-radius:50%;background:#1689ff;filter:blur(120px);opacity:.15;z-index:-1;pointer-events:none}
+.topline{position:absolute;left:5vw;right:5vw;top:24px;display:flex;justify-content:space-between;align-items:center;color:#77caff;font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;opacity:.8}
+.status{display:flex;align-items:center;gap:9px}.dot{width:7px;height:7px;background:#7affcf;box-shadow:0 0 12px #7affcf;border-radius:50%}
+.screen{width:100%;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:76px 22px 35px;text-align:center}
+.brand{position:relative;margin:0;line-height:.78;letter-spacing:.04em;font-weight:950;font-style:italic;text-transform:uppercase;font-size:clamp(4rem,12vw,10rem);color:#d8f7ff;background:linear-gradient(180deg,#fff 0%,#9ce9ff 22%,#397eb6 48%,#d9faff 52%,#4b83bd 78%,#e4fbff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 5px 0 #122a54) drop-shadow(0 0 22px #168bff);-webkit-text-stroke:1px rgba(190,237,255,.38)}
+.brand span{display:block;font-size:.52em;letter-spacing:.22em;margin-top:.18em}
+.subtitle{margin:30px 0 0;color:#b5f8ff;font-size:clamp(.75rem,1.8vw,1.15rem);font-weight:700;letter-spacing:.22em;text-transform:uppercase;text-shadow:0 0 16px #29b9ff}
+.core-wrap{width:clamp(112px,18vw,180px);height:clamp(112px,18vw,180px);margin:38px 0 0;position:relative;display:grid;place-items:center}
+.core{width:54%;height:54%;position:relative;transform:rotate(45deg);border:2px solid #9ffaff;background:linear-gradient(135deg,rgba(37,166,255,.85),rgba(7,25,70,.9));box-shadow:0 0 16px #45d8ff,inset 0 0 24px #5ebdff;animation:corepulse 3s ease-in-out infinite}
+.core:before,.core:after{content:"";position:absolute;inset:13%;border:1px solid #d2ffff;box-shadow:0 0 9px #65eaff}
+.core:after{inset:31%;background:#dfffff;box-shadow:0 0 24px 7px #3dd9ff}
+.ring{position:absolute;inset:5%;border:1px solid rgba(112,221,255,.6);transform:rotate(45deg);box-shadow:0 0 20px rgba(39,148,255,.3)}
+.ring:before,.ring:after{content:"";position:absolute;background:#75eaff;box-shadow:0 0 10px #3adfff}.ring:before{width:1px;height:160%;left:50%;top:-30%}.ring:after{height:1px;width:160%;top:50%;left:-30%}
+.menu{display:flex;gap:clamp(10px,2vw,24px);width:min(920px,100%);margin-top:clamp(30px,6vh,60px)}
+.menu-button{position:relative;flex:1;min-height:86px;padding:18px 10px;border:1px solid #427fa9;background:linear-gradient(180deg,rgba(24,53,80,.95),rgba(5,16,35,.98));clip-path:polygon(10px 0,calc(100% - 10px) 0,100% 14px,100% calc(100% - 14px),calc(100% - 10px) 100%,10px 100%,0 calc(100% - 14px),0 14px);cursor:pointer;text-transform:uppercase;letter-spacing:.16em;font-weight:800;font-size:clamp(.7rem,1.5vw,.95rem);transition:transform .2s,border-color .2s,filter .2s}
+.menu-button:before{content:"";position:absolute;inset:4px;border:1px solid rgba(116,209,255,.15);pointer-events:none}
+.menu-button:hover,.menu-button:focus-visible{transform:translateY(-4px);border-color:var(--cyan);filter:drop-shadow(0 0 12px #198fff);outline:none}
+.menu-button.primary{border:1px solid #d3eaff;background:linear-gradient(180deg,#2b75a2,#102c56 48%,#07162d);box-shadow:inset 0 0 20px rgba(66,177,255,.3);color:#e7fcff}
+.menu-button .symbol{display:block;font-size:1.6rem;margin-bottom:8px;color:#8feaff;text-shadow:0 0 14px #29aaff}
+.menu-button.primary .symbol{color:#f3d9a3}
+.footer{position:absolute;bottom:18px;left:5vw;right:5vw;display:flex;justify-content:space-between;gap:16px;color:#6997c1;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase}
+.overlay{position:fixed;inset:0;z-index:5;display:none;place-items:center;padding:20px;background:rgba(1,5,17,.82);backdrop-filter:blur(10px)}
+.overlay.open{display:grid}.dialog{width:min(440px,100%);padding:30px;border:1px solid #4fbbf1;background:linear-gradient(145deg,#10294c,#050d20);box-shadow:0 0 50px #0879d455;text-align:center}
+.dialog h2{margin:0 0 10px;font-size:1.7rem;letter-spacing:.12em;text-transform:uppercase}.dialog p{color:#9dbdd8;line-height:1.6}.dialog button{margin-top:12px;padding:12px 24px;border:1px solid #80eaff;background:#0e3559;cursor:pointer;text-transform:uppercase;letter-spacing:.15em}
+@keyframes corepulse{0%,100%{filter:brightness(.8)}50%{filter:brightness(1.4)}}
+@media(max-width:600px){.topline{top:15px;font-size:.55rem}.screen{padding-top:70px}.subtitle{letter-spacing:.12em;margin-top:22px}.core-wrap{margin-top:25px}.menu{flex-direction:column;max-width:360px;margin-top:28px;gap:10px}.menu-button{min-height:64px;padding:10px;display:flex;align-items:center;justify-content:center;gap:14px}.menu-button .symbol{font-size:1.2rem;margin:0}.footer{font-size:.5rem;bottom:10px}.brand{font-size:clamp(3.6rem,19vw,6rem)}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="scene">
+  <div class="circuit-grid" aria-hidden="true"></div><div class="circuit-lines" aria-hidden="true"></div><div class="glow" aria-hidden="true"></div>
+  <div class="topline"><span>FUSION SYSTEMS // 001</span><span class="status"><i class="dot"></i> NÚCLEO ONLINE</span></div>
+  <section class="screen" aria-label="Menu principal Fusion TD">
+    <h1 class="brand">FUSION<span>TD</span></h1>
+    <p class="subtitle">Defenda. Evolua. Sobreviva.</p>
+    <div class="core-wrap" aria-hidden="true"><div class="ring"></div><div class="core"></div></div>
+    <nav class="menu" aria-label="Menu do jogo">
+      <button class="menu-button" data-action="loja"><span class="symbol" aria-hidden="true">▤</span><span>Loja</span></button>
+      <button class="menu-button primary" data-action="jogar"><span class="symbol" aria-hidden="true">▶</span><span>Jogar</span></button>
+      <button class="menu-button" data-action="torres"><span class="symbol" aria-hidden="true">♜</span><span>Torres</span></button>
+    </nav>
+  </section>
+  <footer class="footer"><span>FUSION TD · PROTÓTIPO 0.1</span><span>ENERGIA ESTÁVEL // AGUARDANDO COMANDO</span></footer>
+</main>
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
+  <div class="dialog"><h2 id="dialog-title">Em desenvolvimento</h2><p id="dialog-copy">Esta área será implementada na próxima etapa.</p><button id="close-dialog">Voltar ao menu</button></div>
+</div>
+<script>
+const overlay=document.querySelector('#overlay');
+const title=document.querySelector('#dialog-title');
+const copy=document.querySelector('#dialog-copy');
+const messages={
+  jogar:['Preparando defesa','A base do jogo está pronta. Na próxima etapa, vamos criar o mapa, os inimigos e as primeiras ondas.'],
+  loja:['Loja de equipamentos','Aqui ficarão as melhorias e os recursos desbloqueáveis.'],
+  torres:['Arquivo de torres','Aqui será possível consultar e selecionar as torres defensivas.']
+};
+document.querySelectorAll('[data-action]').forEach(button=>button.addEventListener('click',()=>{
+  const [heading,description]=messages[button.dataset.action];
+  title.textContent=heading;copy.textContent=description;overlay.classList.add('open');
+  document.querySelector('#close-dialog').focus();
+}));
+document.querySelector('#close-dialog').addEventListener('click',()=>overlay.classList.remove('open'));
+overlay.addEventListener('click',event=>{if(event.target===overlay)overlay.classList.remove('open')});
+document.addEventListener('keydown',event=>{if(event.key==='Escape')overlay.classList.remove('open')});
+</script>
+</body>
+</html>
