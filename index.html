@@ -223,6 +223,7 @@ const oldShow=show;
 show=function(name){oldShow(name);if(name==='game'){if(!tdReady)tdStart();else{tdResetGame();tdResize();tdLast=performance.now();if(tdFrame)cancelAnimationFrame(tdFrame);tdFrame=requestAnimationFrame(tdTick)}}else if(tdFrame){cancelAnimationFrame(tdFrame);tdFrame=0}};
 $('#exit-game').addEventListener('click',()=>{if(tdFrame)cancelAnimationFrame(tdFrame);show('home')});
 window.addEventListener('resize',tdResize);window.addEventListener('orientationchange',()=>setTimeout(tdResize,120));
+window.tdStartGame=tdStart;
 
 })();
 </script>
